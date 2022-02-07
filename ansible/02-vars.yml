@@ -1,0 +1,87 @@
+- name: Variable on Play level
+  hosts: all
+  vars:
+    URL: play.example.com
+  tasks:
+    - name: Print URL
+      ansible.builtin.debug:
+        msg: URL = {{URL}}
+# Note: If we declare a varibale in PLAY level then all the tasks can access that variable.
+
+- name: Variables from File in Play Level
+  hosts: all
+  vars_files:
+    - sample-vars.yml
+  tasks:
+    - name: Print URL
+      ansible.builtin.debug:
+        msg: URL = {{URL}}
+
+# We can load all the variables from a file, Since it is on play level, all the tasks can access those variables
+
+- name: Variables on Task Level
+  hosts: all
+  tasks:
+    - name: Print URL in Task1
+      ansible.builtin.debug:
+        msg: URL == {{URL}}
+      vars:
+        URL: task1.example.com
+
+    - name: Print URL in Task2
+      ansible.builtin.debug:
+        msg: URL == {{URL}}
+      vars:
+        URL: task2.exmaple.com
+
+# Scope of task variable is only to that task, the other task cannot access the other tasks variables
+
+- name: Variable from Inventory
+  hosts: all
+  tasks:
+    - name: Print URL
+      ansible.builtin.debug:
+        msg: URL == {{URL}}
+
+## Variable Precedence
+- name: Variable Precedence
+  hosts: all
+  vars:
+    URL: play.example.com
+  vars_files:
+    - sample-vars.yml
+  tasks:
+    - name: Print URL
+      ansible.builtin.debug:
+        msg: URL == {{URL}}
+      vars:
+        URL: task.example.com
+
+## Print Hostname of remote node
+- name: Print Hostname of remote node
+  hosts: all
+  tasks:
+    - name: Print Hostname
+      ansible.builtin.debug:
+        msg: Hostname = {{ansible_hostname}}
+    - name: Print processor info
+      ansible.builtin.debug:
+        msg: "{{ansible_processor}}"
+
+- name: Register a variable
+  hosts: all
+  tasks:
+    - name: Run uptime command
+      ansible.builtin.shell: uptime
+      register: OUT
+    #    - name: Print OUT Variable
+    #      ansible.builtin.debug:
+    #        msg: "{{OUT.stdout}}"
+
+    - name: Declare a standard variable name
+      ansible.builtin.set_fact:
+        UPTIME_STDOUT: "{{OUT.stdout}}"
+
+    - name: Print UPTIME_STDOUT
+      ansible.builtin.debug:
+        msg: "{{UPTIME_STDOUT}}"
