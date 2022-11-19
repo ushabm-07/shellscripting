@@ -1,0 +1,18 @@
+1.Print Line
+2.Print Line with colours
+3.Print data in new line
+4.Print data with space
+
+VARIABLES
+1.Create a variable & print the data
+2.Create variable with command
+3.Create variable with expression
+4.Access variable from shell command line
+5.Special Variable
+
+IFELSE
+1.Create a function
+2.USe return command
+3.Crep-
+4.Case
+5.Loop

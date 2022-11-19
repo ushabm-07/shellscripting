@@ -20,3 +20,5 @@ echo -e "\e[1;31mRED\e[1;32mGREEN\e[1;33mYELLOW\e[1;34mBLUE\e[1;35mMAGENTA\e[1;3
 # 2. New Tab \t
 echo -e "Line1\nLine2"
 echo -e "WORD1\t\tWORD2"
+
+echo Testing
